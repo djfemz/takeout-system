@@ -20,5 +20,7 @@ public class OrderLineItem {
     private int quantity;
     private BigDecimal subAmount;
     @OneToOne
+    private Item item;
+    @OneToOne
     private Sale sale;
 }
