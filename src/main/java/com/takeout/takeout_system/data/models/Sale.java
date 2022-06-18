@@ -22,6 +22,8 @@ public class Sale {
     @OneToMany
     private Set<OrderLineItem> orderLineItems;
     @OneToOne
+    private Store store;
+    @OneToOne
     private Delivery delivery;
     private LocalDateTime time;
 }

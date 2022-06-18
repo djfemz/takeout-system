@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class CreateStoreRequest {
-    private String name;
-    private String address;
-    private Boolean isOpened;
+@AllArgsConstructor
+public class EnterItemRequest {
+    private Integer id;
+    private Integer quantity;
 }
