@@ -2,11 +2,12 @@ package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.Sale;
+import com.takeout.takeout_system.exceptions.SaleNotFoundException;
 
 import java.util.Set;
 
 public interface TakeOutSystemService {
-    Boolean acceptOrder(String name);
+    Boolean acceptOrder(String name) throws SaleNotFoundException;
     Boolean terminateOrder(String name);
     Set<Sale> excursionPublicOrder(String id);
     Boolean enterStore(Integer id);
