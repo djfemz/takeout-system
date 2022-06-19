@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,10 +20,12 @@ import java.util.List;
 public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Type(type = "uuid-char")
+    private UUID id;
     private String name;
     private String attribute3;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @OneToMany
-    private List<Sale> sale;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Sale> sale;
 }

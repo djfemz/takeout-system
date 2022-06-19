@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @Service
 public class ManageDeliveryServiceImpl implements ManageDeliveryService{
@@ -17,8 +18,13 @@ public class ManageDeliveryServiceImpl implements ManageDeliveryService{
     public Boolean createDelivery(CreateDeliveryRequest createDeliveryRequest) {
         Delivery delivery = new Delivery();
         delivery.setName(createDeliveryRequest.getName());
-        delivery.setSale(new ArrayList<>());
+        delivery.setSale(new HashSet<>());
         deliveryRepository.save(delivery);
         return true;
+    }
+
+    @Override
+    public Delivery findByName(String name) {
+        return deliveryRepository.findByName(name);
     }
 }

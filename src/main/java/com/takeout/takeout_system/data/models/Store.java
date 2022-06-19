@@ -16,19 +16,19 @@ import java.util.Set;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
     @NonNull
     private String name;
     @NonNull
     private String address;
-    private Boolean isOpened;
+    private boolean isOpened;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Sale> sales;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Item> items;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<ProductCatalogue> productCatalogues;
 }

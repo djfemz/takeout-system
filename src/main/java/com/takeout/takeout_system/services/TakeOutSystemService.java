@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface TakeOutSystemService {
     Boolean acceptOrder(String name) throws SaleNotFoundException;
-    Boolean terminateOrder(String name);
+    Boolean terminateOrder(String name) throws SaleNotFoundException;
     Set<Sale> excursionPublicOrder(String id);
     Boolean enterStore(Integer id);
     Item search(String name);

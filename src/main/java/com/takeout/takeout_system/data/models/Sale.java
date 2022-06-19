@@ -22,10 +22,10 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Boolean isComplete;
+    private boolean isComplete;
     private BigDecimal amount;
-    private Boolean isReadyToPay;
-    private Boolean isAccept;
+    private boolean isReadyToPay;
+    private boolean isAccept=false;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToOne
     private Customer customer;
@@ -42,4 +42,20 @@ public class Sale {
     @OneToOne
     private Delivery delivery;
     private LocalDateTime time;
+
+    public boolean isAccept() {
+        return isAccept;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(Boolean complete) {
+        isComplete = complete;
+    }
+
+    public void setAccept(boolean accept) {
+        isAccept = accept;
+    }
 }
