@@ -27,4 +27,9 @@ public class ManageDeliveryServiceImpl implements ManageDeliveryService{
     public Delivery findByName(String name) {
         return deliveryRepository.findByName(name);
     }
+
+    @Override
+    public Delivery getDeliveryBy(String id) {
+        return deliveryRepository.findById(id).orElse(null);
+    }
 }

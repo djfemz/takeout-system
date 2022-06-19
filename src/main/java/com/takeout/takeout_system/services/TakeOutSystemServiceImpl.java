@@ -20,7 +20,7 @@ import java.util.Set;
 public class TakeOutSystemServiceImpl implements TakeOutSystemService {
     @Autowired
     private SaleService saleService;
-
+    private ManageDeliveryService manageDeliveryService;
     private Delivery currentDelivery;
 
 
@@ -45,7 +45,8 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
 
     @Override
     public Set<Sale> excursionPublicOrder(String id) {
-
+        Delivery delivery = manageDeliveryService.getDeliveryBy(id);
+        if (delivery!=null) return delivery.getSale();
         return null;
     }
 
