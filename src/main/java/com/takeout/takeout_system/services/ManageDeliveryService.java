@@ -6,5 +6,5 @@ import com.takeout.takeout_system.data.models.Delivery;
 public interface ManageDeliveryService {
     Boolean createDelivery(CreateDeliveryRequest createDeliveryRequest);
     Delivery findByName(String name);
-    Delivery getDeliveryBy(String id);
+    Delivery getDeliveryBy(Long id);
 }

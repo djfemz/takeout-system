@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,9 +20,9 @@ import java.util.UUID;
 @Entity
 public class Delivery {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "uuid-char")
-    private UUID id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(insertable = false, nullable = false)
+    private Long id;
     private String name;
     private String attribute3;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

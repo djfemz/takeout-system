@@ -5,6 +5,7 @@ import com.takeout.takeout_system.data.dto.CreateDeliveryRequest;
 import com.takeout.takeout_system.data.models.Delivery;
 import com.takeout.takeout_system.data.models.Sale;
 import com.takeout.takeout_system.data.models.Store;
+import com.takeout.takeout_system.data.repositories.DeliveryRepository;
 import com.takeout.takeout_system.exceptions.SaleNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,8 @@ class TakeOutSystemServiceImplTest {
     private SaleService saleService;
     @Autowired
     private ManageDeliveryService manageDeliveryService;
+    @Autowired
+    DeliveryRepository deliveryRepository;
 
     private Sale sale;
 
@@ -36,6 +39,7 @@ class TakeOutSystemServiceImplTest {
 
     @BeforeEach
     void setUp(){
+        deliveryRepository.deleteAll();
         sale = new Sale();
         sale.setName("test sale");
         sale.setStore(new Store("test store", "test address"));
@@ -61,7 +65,8 @@ class TakeOutSystemServiceImplTest {
         manageDeliveryService.createDelivery(deliveryRequest);
         Delivery delivery = manageDeliveryService.findByName(deliveryRequest.getName());
         log.info("delivery-id->{}", delivery.getId());
-        Set<Sale> deliverySet = takeOutSystemService.excursionPublicOrder(delivery.getId().toString());
+        Set<Sale> deliverySet = takeOutSystemService.excursionPublicOrder(delivery.getId());
+        assertThat(deliverySet).isNotNull();
         assertThat(deliverySet).containsExactly(delivery.getSale().toArray(new Sale[0]));
     }
 

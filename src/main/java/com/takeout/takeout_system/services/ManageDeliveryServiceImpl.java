@@ -29,7 +29,7 @@ public class ManageDeliveryServiceImpl implements ManageDeliveryService{
     }
 
     @Override
-    public Delivery getDeliveryBy(String id) {
+    public Delivery getDeliveryBy(Long id) {
         return deliveryRepository.findById(id).orElse(null);
     }
 }

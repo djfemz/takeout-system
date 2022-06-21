@@ -17,9 +17,8 @@ import java.util.UUID;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "uuid-char")
     @Column(insertable = false, nullable = false)
-    private String id;
+    private Long id;
     private String name;
     private String address;
 }
