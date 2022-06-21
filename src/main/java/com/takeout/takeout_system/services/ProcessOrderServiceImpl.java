@@ -3,6 +3,7 @@ package com.takeout.takeout_system.services;
 import com.takeout.takeout_system.data.dto.EnterItemRequest;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Service
@@ -23,7 +24,7 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     }
 
     @Override
-    public Boolean makeCashPayment(BigInteger amount) {
+    public Boolean makeCashPayment(BigDecimal amount) {
         return null;
     }
 }

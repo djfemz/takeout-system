@@ -35,11 +35,19 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
 
     @Override
     public boolean modifyStore(ModifyStoreRequest modifyStoreRequest) {
-        return false;
+        Store foundStore = storeRepository.findById(modifyStoreRequest.getId())
+                .orElseThrow(()->new StoreException(String.format("store with id %d not found", modifyStoreRequest.getId())));
+        mapper.map(modifyStoreRequest, foundStore);
+        Store savedStore =storeRepository.save(foundStore);
+        log.info("updated store->{} {} {}", savedStore.getName(), savedStore.getAddress(), savedStore.getId());
+        return true;
     }
 
     @Override
     public boolean deleteStore(Long id) {
-        return false;
+        Store foundStore = storeRepository.findById(id)
+                .orElseThrow(()->new StoreException(String.format("store with id %d not found", id)));
+        storeRepository.deleteById(foundStore.getId());
+        return true;
     }
 }

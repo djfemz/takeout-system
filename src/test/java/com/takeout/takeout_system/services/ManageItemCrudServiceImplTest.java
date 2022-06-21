@@ -3,6 +3,7 @@ package com.takeout.takeout_system.services;
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
 import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
+import com.takeout.takeout_system.data.repositories.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

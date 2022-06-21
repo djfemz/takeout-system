@@ -20,6 +20,8 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
     @Autowired
     private ItemRepository itemRepository;
     private final ModelMapper modelMapper = new ModelMapper();
+
+
     @Override
     public Boolean createItem(CreateItemRequest createItemRequest) {
         Item item = new Item();
@@ -27,7 +29,7 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
         item.setOrderPrice(createItemRequest.getOrderPrice());
         item.setStockNumber(createItemRequest.getStockNumber());
         item.setProductCatalogue(new ProductCatalogue());
-        item.setStore(new Store());
+        item.setStore(createItemRequest.getStore());
         Item savedItem = itemRepository.save(item);
         return savedItem.getId() > 0;
     }
@@ -35,6 +37,11 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
     @Override
     public Item findItem(Long id) {
         return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException(String.format("item with id %d not found", id)));
+    }
+
+    @Override
+    public Item findBy(String name) {
+        return itemRepository.findByName(name);
     }
 
     @Override

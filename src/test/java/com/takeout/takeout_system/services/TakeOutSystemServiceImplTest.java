@@ -2,8 +2,10 @@ package com.takeout.takeout_system.services;
 
 
 import com.takeout.takeout_system.data.dto.CreateDeliveryRequest;
+import com.takeout.takeout_system.data.dto.CreateItemRequest;
 import com.takeout.takeout_system.data.dto.CreateStoreRequest;
 import com.takeout.takeout_system.data.models.Delivery;
+import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.Sale;
 import com.takeout.takeout_system.data.models.Store;
 import com.takeout.takeout_system.data.repositories.DeliveryRepository;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,8 +35,7 @@ class TakeOutSystemServiceImplTest {
     @Autowired
     private ManageDeliveryService manageDeliveryService;
     @Autowired
-    private DeliveryRepository deliveryRepository;
-
+    private ManageItemCrudService manageItemCrudService;
     @Autowired
     private ManageStoreCrudService manageStoreCrudService;
 
@@ -43,12 +45,23 @@ class TakeOutSystemServiceImplTest {
 
     private CreateStoreRequest createStoreRequest;
 
+    private CreateItemRequest createItemRequest;
+
     @BeforeEach
     void setUp(){
-        deliveryRepository.deleteAll();
+        createItemRequest = new CreateItemRequest();
+        createItemRequest.setName("test item");
+        createItemRequest.setPrice(BigDecimal.TEN);
+        createItemRequest.setStockNumber(3);
+
+
         sale = new Sale();
         sale.setName("test sale");
-        sale.setStore(new Store("test store", "test address"));
+        Store store = new Store();
+        store.setName("test store");
+        store.setAddress("test Address");
+        sale.setStore(store);
+
         saleService.addSale(sale);
 
         deliveryRequest=new CreateDeliveryRequest();
@@ -94,6 +107,15 @@ class TakeOutSystemServiceImplTest {
 
     @Test
     void searchTest() {
-
+        Store store = new Store();
+        store.setName("testy store");
+        store.setAddress("testy address");
+        createItemRequest.setStore(store);
+        takeOutSystemService.setCurrentStore(store);
+        Boolean createItemResponse = manageItemCrudService.createItem(createItemRequest);
+        assertThat(createItemResponse).isTrue();
+        Item foundItem = takeOutSystemService.search(createItemRequest.getName());
+        assertThat(foundItem).isNotNull();
+        assertThat(foundItem.getName()).isEqualTo(createItemRequest.getName());
     }
 }

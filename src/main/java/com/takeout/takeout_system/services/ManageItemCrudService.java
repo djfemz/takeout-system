@@ -9,6 +9,7 @@ import java.io.IOException;
 public interface ManageItemCrudService {
     Boolean createItem(CreateItemRequest createItemRequest);
     Item findItem(Long id);
+    Item findBy(String name);
     Boolean modifyItem(Long id, ModifyItemRequest modifyItemRequest) ;
     Boolean deleteItem(Long id);
 }

@@ -12,15 +12,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull
     private String name;
-    @NonNull
     private String address;
     private boolean isOpened;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)

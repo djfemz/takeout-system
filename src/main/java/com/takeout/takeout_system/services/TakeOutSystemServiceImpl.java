@@ -30,6 +30,9 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
     @Autowired
     private ManageStoreCrudService manageStoreCrudService;
 
+    @Autowired
+    private ManageItemCrudService manageItemCrudService;
+
     private Delivery currentDelivery;
 
     private Store currentStore;
@@ -69,6 +72,6 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
 
     @Override
     public Item search(String name) {
-        return null;
+        return manageItemCrudService.findBy(name);
     }
 }
