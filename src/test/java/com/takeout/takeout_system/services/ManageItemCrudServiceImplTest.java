@@ -1,6 +1,7 @@
 package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
+import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ class ManageItemCrudServiceImplTest {
     @Autowired
     private ManageItemCrudService manageItemCrudService;
     private CreateItemRequest createItemRequest;
+    private ModifyItemRequest request;
 
     @BeforeEach
     void setUp(){
@@ -26,6 +28,10 @@ class ManageItemCrudServiceImplTest {
         createItemRequest.setPrice(BigDecimal.TEN);
         createItemRequest.setOrderPrice(BigDecimal.ZERO);
         createItemRequest.setStockNumber(10);
+
+        request = new ModifyItemRequest();
+        request.setPrice(BigDecimal.valueOf(20));
+        request.setStockNumber(2);
     }
 
     @Test
@@ -44,10 +50,19 @@ class ManageItemCrudServiceImplTest {
     }
 
     @Test
-    void modifyItemTest() {
+    void modifyItemTest()  {
+        Boolean createItemResponse =  manageItemCrudService.createItem(createItemRequest);
+        assertThat(createItemResponse).isTrue();
+        Boolean updateResponse = manageItemCrudService.modifyItem(1L, request);
+        assertThat(updateResponse).isTrue();
+
     }
 
     @Test
     void deleteItemTest() {
+        Boolean createItemResponse = manageItemCrudService.createItem(createItemRequest);
+        assertThat(createItemResponse).isTrue();
+        Boolean deleteResponse = manageItemCrudService.deleteItem(1L);
+        assertThat(deleteResponse).isTrue();
     }
 }

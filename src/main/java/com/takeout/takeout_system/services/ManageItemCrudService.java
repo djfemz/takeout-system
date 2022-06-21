@@ -4,9 +4,11 @@ import com.takeout.takeout_system.data.dto.CreateItemRequest;
 import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 
+import java.io.IOException;
+
 public interface ManageItemCrudService {
     Boolean createItem(CreateItemRequest createItemRequest);
     Item findItem(Long id);
-    Boolean modifyItem(ModifyItemRequest modifyItemRequest);
+    Boolean modifyItem(Long id, ModifyItemRequest modifyItemRequest) ;
     Boolean deleteItem(Long id);
 }
