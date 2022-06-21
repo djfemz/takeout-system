@@ -1,6 +1,7 @@
 package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
+import com.takeout.takeout_system.data.models.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ class ManageItemCrudServiceImplTest {
 
     @Test
     void findItemTest() {
+       Boolean createItemResponse =  manageItemCrudService.createItem(createItemRequest);
+       assertThat(createItemResponse).isTrue();
+       Item foundItem = manageItemCrudService.findItem(1L);
+       assertThat(foundItem).isNotNull();
     }
 
     @Test

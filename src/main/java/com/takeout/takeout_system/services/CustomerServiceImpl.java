@@ -12,7 +12,7 @@ public class CustomerServiceImpl implements CustomerService{
     private CustomerRepository customerRepository;
 
     @Override
-    public Customer getCustomerById(String id) {
+    public Customer getCustomerById(Long id) {
         return customerRepository.findById(id).orElse(null);
     }
 }

@@ -3,9 +3,11 @@ package com.takeout.takeout_system.services;
 import com.takeout.takeout_system.data.models.Delivery;
 import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.Sale;
+import com.takeout.takeout_system.data.models.Store;
 import com.takeout.takeout_system.exceptions.SaleNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,20 @@ import java.util.Set;
 @Setter
 @Service
 @Slf4j
+@AllArgsConstructor
+@NoArgsConstructor
 public class TakeOutSystemServiceImpl implements TakeOutSystemService {
+
     @Autowired
     private SaleService saleService;
     @Autowired
     private ManageDeliveryService manageDeliveryService;
+    @Autowired
+    private ManageStoreCrudService manageStoreCrudService;
+
     private Delivery currentDelivery;
+
+    private Store currentStore;
 
 
     @Override
@@ -52,8 +62,9 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
     }
 
     @Override
-    public Boolean enterStore(Integer id) {
-        return null;
+    public Boolean enterStore(Long id) {
+        this.currentStore = manageStoreCrudService.findStore(id);
+        return true;
     }
 
     @Override

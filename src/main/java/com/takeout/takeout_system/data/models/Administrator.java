@@ -1,4 +1,4 @@
-package com.takeout.takeout_system.data.dto;
+package com.takeout.takeout_system.data.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,8 +8,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class CreateStoreRequest {
-    private String name;
-    private String address;
+public class Administrator extends User{
 }

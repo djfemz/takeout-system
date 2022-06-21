@@ -6,7 +6,7 @@ import com.takeout.takeout_system.data.models.Item;
 
 public interface ManageItemCrudService {
     Boolean createItem(CreateItemRequest createItemRequest);
-    Item findItem(Integer id);
+    Item findItem(Long id);
     Boolean modifyItem(ModifyItemRequest modifyItemRequest);
-    Boolean deleteItem(Integer id);
+    Boolean deleteItem(Long id);
 }

@@ -3,10 +3,12 @@ package com.takeout.takeout_system.services;
 import com.takeout.takeout_system.data.dto.CreateStoreRequest;
 import com.takeout.takeout_system.data.dto.ModifyStoreRequest;
 import com.takeout.takeout_system.data.models.Store;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface ManageStoreCrudService {
-    Boolean createStore(CreateStoreRequest createStoreRequest);
-    Store findStore(Integer id);
-    Boolean modifyStore(ModifyStoreRequest modifyStoreRequest);
-    Boolean deleteStore(Integer id);
+    boolean createStore(CreateStoreRequest createStoreRequest);
+    Store findStore(Long id);
+    boolean modifyStore(ModifyStoreRequest modifyStoreRequest);
+    boolean deleteStore(Long id);
 }

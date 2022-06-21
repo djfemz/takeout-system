@@ -1,15 +1,17 @@
-package com.takeout.takeout_system.data.dto;
+package com.takeout.takeout_system.data.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateStoreRequest {
+@Getter
+@Setter
+public class Business extends User{
     private String name;
-    private String address;
+    private Set<Store> stores;
 }

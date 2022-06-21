@@ -2,6 +2,7 @@ package com.takeout.takeout_system.services;
 
 
 import com.takeout.takeout_system.data.dto.CreateDeliveryRequest;
+import com.takeout.takeout_system.data.dto.CreateStoreRequest;
 import com.takeout.takeout_system.data.models.Delivery;
 import com.takeout.takeout_system.data.models.Sale;
 import com.takeout.takeout_system.data.models.Store;
@@ -23,19 +24,24 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Slf4j
 class TakeOutSystemServiceImplTest {
+
     @Autowired
-    private TakeOutSystemService takeOutSystemService;
+    private TakeOutSystemServiceImpl takeOutSystemService;
     @Autowired
     private SaleService saleService;
     @Autowired
     private ManageDeliveryService manageDeliveryService;
     @Autowired
-    DeliveryRepository deliveryRepository;
+    private DeliveryRepository deliveryRepository;
+
+    @Autowired
+    private ManageStoreCrudService manageStoreCrudService;
 
     private Sale sale;
 
     private CreateDeliveryRequest deliveryRequest;
 
+    private CreateStoreRequest createStoreRequest;
 
     @BeforeEach
     void setUp(){
@@ -43,19 +49,26 @@ class TakeOutSystemServiceImplTest {
         sale = new Sale();
         sale.setName("test sale");
         sale.setStore(new Store("test store", "test address"));
+        saleService.addSale(sale);
+
         deliveryRequest=new CreateDeliveryRequest();
         deliveryRequest.setName("test deliveryy");
+
+        createStoreRequest=new CreateStoreRequest();
+        createStoreRequest.setAddress("test address");
+        createStoreRequest.setName("test store");
+
     }
 
     @Test
     void acceptOrderTest() throws SaleNotFoundException {
-        saleService.addSale(sale);
         Boolean acceptOrderResponse = takeOutSystemService.acceptOrder("test sale");
-       assertThat(acceptOrderResponse).isTrue();
+        assertThat(acceptOrderResponse).isTrue();
     }
 
     @Test
     void  terminateOrderTest() throws SaleNotFoundException {
+        saleService.addSale(sale);
         Boolean terminateOrderResponse = takeOutSystemService.terminateOrder("test sale");
         assertThat(terminateOrderResponse).isTrue();
     }
@@ -72,6 +85,10 @@ class TakeOutSystemServiceImplTest {
 
     @Test
     void enterStoreTest() {
+        manageStoreCrudService.createStore(createStoreRequest);
+        Boolean response = takeOutSystemService.enterStore(3L);
+        assertThat(takeOutSystemService.getCurrentStore()).isEqualTo(manageStoreCrudService.findStore(3L));
+        assertThat(response).isTrue();
 
     }
 
