@@ -16,7 +16,7 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     @Override
     public Boolean makeNewOrder() {
         Sale sale = new Sale();
-
+        Sale currentSale = saleService.getCurrentSale();
         return true;
     }
 

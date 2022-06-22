@@ -61,4 +61,9 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
     public Store save(Store store) {
         return storeRepository.save(store);
     }
+
+    @Override
+    public Store getCurrentStore() {
+        return storeRepository.findByIsCurrentStoreIsTrue();
+    }
 }

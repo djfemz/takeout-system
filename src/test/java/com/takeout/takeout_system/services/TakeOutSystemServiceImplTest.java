@@ -100,7 +100,7 @@ class TakeOutSystemServiceImplTest {
     void enterStoreTest() {
         manageStoreCrudService.createStore(createStoreRequest);
         Boolean response = takeOutSystemService.enterStore(3L);
-        assertThat(takeOutSystemService.getCurrentStore()).isEqualTo(manageStoreCrudService.findStore(3L));
+        assertThat(manageStoreCrudService.getCurrentStore()).isEqualTo(manageStoreCrudService.findStore(3L));
         assertThat(response).isTrue();
 
     }
@@ -111,7 +111,6 @@ class TakeOutSystemServiceImplTest {
         store.setName("testy store");
         store.setAddress("testy address");
         createItemRequest.setStore(store);
-        takeOutSystemService.setCurrentStore(store);
         Boolean createItemResponse = manageItemCrudService.createItem(createItemRequest);
         assertThat(createItemResponse).isTrue();
         Item foundItem = takeOutSystemService.search(createItemRequest.getName());

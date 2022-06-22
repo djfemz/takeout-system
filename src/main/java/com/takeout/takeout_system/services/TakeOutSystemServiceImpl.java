@@ -33,16 +33,12 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
     @Autowired
     private ManageItemCrudService manageItemCrudService;
 
-    private Delivery currentDelivery;
-
-    private Store currentStore;
-
 
     @Override
     public Boolean acceptOrder(String name) throws SaleNotFoundException {
         Sale sale = saleService.getSaleBy(name);
         if (sale==null) throw new SaleNotFoundException("no such sale found");
-        currentDelivery=sale.getDelivery();
+        Delivery currentDelivery = manageDeliveryService.getCurrentDelivery();
         sale.setAccept(true);
         sale.setDelivery(currentDelivery);
         return saleService.addSale(sale);
@@ -52,7 +48,7 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
     public Boolean terminateOrder(String name) throws SaleNotFoundException {
         Sale foundSale = saleService.getSaleBy(name);
         if (foundSale==null) throw new SaleNotFoundException("no such sale found");
-        currentDelivery = foundSale.getDelivery();
+        Delivery currentDelivery = manageDeliveryService.getCurrentDelivery();
         if (foundSale.isAccept()) foundSale.setComplete(true);
         return saleService.addSale(foundSale);
     }
@@ -66,7 +62,12 @@ public class TakeOutSystemServiceImpl implements TakeOutSystemService {
 
     @Override
     public Boolean enterStore(Long id) {
-        this.currentStore = manageStoreCrudService.findStore(id);
+        Store store = manageStoreCrudService.findStore(id);
+        Store currentStore = manageStoreCrudService.getCurrentStore();
+        currentStore.setCurrentStore(false);
+        manageStoreCrudService.save(currentStore);
+        store.setCurrentStore(true);
+        manageStoreCrudService.save(store);
         return true;
     }
 

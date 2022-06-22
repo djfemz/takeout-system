@@ -25,7 +25,7 @@ public class SaleServiceImpl implements SaleService{
 
     @Override
     public Sale getCurrentSale(){
-        return saleRepository.findByCurrentSaleIsTrue();
+        return saleRepository.findByIsCurrentSaleIsTrue();
     }
 
     @Override

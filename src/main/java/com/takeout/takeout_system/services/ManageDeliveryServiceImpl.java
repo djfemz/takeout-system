@@ -32,4 +32,9 @@ public class ManageDeliveryServiceImpl implements ManageDeliveryService{
     public Delivery getDeliveryBy(Long id) {
         return deliveryRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Delivery getCurrentDelivery() {
+        return deliveryRepository.findByIsCurrentDeliveryIsTrue();
+    }
 }
