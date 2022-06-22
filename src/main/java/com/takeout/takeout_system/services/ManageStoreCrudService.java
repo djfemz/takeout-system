@@ -11,4 +11,5 @@ public interface ManageStoreCrudService {
     Store findStore(Long id);
     boolean modifyStore(ModifyStoreRequest modifyStoreRequest);
     boolean deleteStore(Long id);
+    Store save(Store store);
 }

@@ -8,6 +8,6 @@ import java.math.BigInteger;
 public interface ProcessOrderService {
     Boolean makeNewOrder();
     Boolean enterItem(EnterItemRequest enterItemRequest);
-    BigInteger endOrder();
+    BigDecimal endOrder();
     Boolean makeCashPayment(BigDecimal amount);
 }

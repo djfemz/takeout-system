@@ -10,6 +10,7 @@ import java.math.BigInteger;
 public class ProcessOrderServiceImpl implements ProcessOrderService {
     @Override
     public Boolean makeNewOrder() {
+
         return null;
     }
 
@@ -19,7 +20,7 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     }
 
     @Override
-    public BigInteger endOrder() {
+    public BigDecimal endOrder() {
         return null;
     }
 

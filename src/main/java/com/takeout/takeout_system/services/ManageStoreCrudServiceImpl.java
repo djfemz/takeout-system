@@ -10,18 +10,24 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 @Slf4j
 public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
 
     @Autowired
     private StoreRepository storeRepository;
+
     private final ModelMapper mapper = new ModelMapper();
 
 
     @Override
     public boolean createStore(CreateStoreRequest createStoreRequest) {
         Store store = mapper.map(createStoreRequest, Store.class);
+        store.setProductCatalogues(new HashSet<>());
+        store.setItems(new HashSet<>());
+        store.setSales(new HashSet<>());
         store.setOpened(true);
         Store savedStore = storeRepository.save(store);
         if (savedStore!=null) return true;
@@ -49,5 +55,10 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
                 .orElseThrow(()->new StoreException(String.format("store with id %d not found", id)));
         storeRepository.deleteById(foundStore.getId());
         return true;
+    }
+
+    @Override
+    public Store save(Store store) {
+        return storeRepository.save(store);
     }
 }
