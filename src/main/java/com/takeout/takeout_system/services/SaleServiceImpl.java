@@ -2,6 +2,7 @@ package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.models.Sale;
 import com.takeout.takeout_system.data.repositories.SaleRepository;
+import com.takeout.takeout_system.exceptions.SaleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class SaleServiceImpl implements SaleService{
 
     @Override
     public Sale getSaleBy(Long id) {
-        return saleRepository.findById(id).orElse(null);
+        return saleRepository.findById(id)
+                .orElseThrow(()->new SaleNotFoundException(String.format("sale with id %d not found", id)));
     }
 
     @Override
