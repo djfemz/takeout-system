@@ -39,16 +39,18 @@ class ProcessOrderServiceImplTest {
     }
     @Test
     void makeNewOrderTest() {
-        boolean createStoreResponse = manageStoreCrudService.createStore(storeRequest);
-        assertThat(createStoreResponse).isTrue();
-        Store store = manageStoreCrudService.findStore(1L);
-        itemRequest.setStore(store);
-        boolean itemCreationResponse = manageItemCrudService.createItem(itemRequest);
-        Item foundItem =manageItemCrudService.findItem(1L);
-        store.getItems().add(foundItem);
-        manageStoreCrudService.save(store);
+//        boolean createStoreResponse = manageStoreCrudService.createStore(storeRequest);
+//        assertThat(createStoreResponse).isTrue();
+//        Store store = manageStoreCrudService.findStore(1L);
+//        itemRequest.setStore(store);
+//        boolean itemCreationResponse = manageItemCrudService.createItem(itemRequest);
+//        Item foundItem =manageItemCrudService.findItem(1L);
+//        store.getItems().add(foundItem);
+//        manageStoreCrudService.save(store);
+//        assertThat(itemCreationResponse).isTrue();
+        boolean makeOrderResponse = processOrderService.makeNewOrder();
+        assertThat(makeOrderResponse).isTrue();
 
-        assertThat(itemCreationResponse).isTrue();
 
     }
 

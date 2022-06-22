@@ -22,7 +22,7 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private boolean isComplete;
+    private boolean isComplete=false;
     private BigDecimal amount;
     private boolean isReadyToPay;
     private boolean isAccept=false;
@@ -38,10 +38,19 @@ public class Sale {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToOne
     private Store store;
+    private boolean isCurrentSale=false;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToOne
     private Delivery delivery;
     private LocalDateTime time;
+
+    public boolean isCurrentSale() {
+        return isCurrentSale;
+    }
+
+    public void setCurrentSale(boolean currentSale) {
+        isCurrentSale = currentSale;
+    }
 
     public boolean isAccept() {
         return isAccept;

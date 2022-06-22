@@ -25,6 +25,7 @@ public class Delivery {
     private Long id;
     private String name;
     private String attribute3;
+    private boolean isCurrentDelivery = false;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
 
     @OneToMany(fetch = FetchType.EAGER)

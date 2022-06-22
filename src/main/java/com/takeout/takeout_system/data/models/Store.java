@@ -29,6 +29,15 @@ public class Store {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(fetch = FetchType.EAGER)
     private Set<ProductCatalogue> productCatalogues;
+    private boolean isCurrentStore = false;
+
+    public boolean isCurrentStore() {
+        return isCurrentStore;
+    }
+
+    public void setCurrentStore(boolean currentStore) {
+        isCurrentStore = currentStore;
+    }
 
     @Override
     public String toString(){

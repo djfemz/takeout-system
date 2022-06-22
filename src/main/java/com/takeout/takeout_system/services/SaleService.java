@@ -6,4 +6,5 @@ public interface SaleService {
     Boolean addSale(Sale sale);
     Sale getSaleBy(Long id);
     Sale getSaleBy(String name);
+    Sale getCurrentSale();
 }
