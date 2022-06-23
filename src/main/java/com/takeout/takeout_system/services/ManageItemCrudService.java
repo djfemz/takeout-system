@@ -12,4 +12,5 @@ public interface ManageItemCrudService {
     Item findBy(String name);
     Boolean modifyItem(Long id, ModifyItemRequest modifyItemRequest) ;
     Boolean deleteItem(Long id);
+    Item saveItem(Item item);
 }

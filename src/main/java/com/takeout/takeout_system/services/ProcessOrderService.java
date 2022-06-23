@@ -7,7 +7,7 @@ import java.math.BigInteger;
 
 public interface ProcessOrderService {
     Boolean makeNewOrder();
-    Boolean enterItem(EnterItemRequest enterItemRequest);
+    boolean enterItem(EnterItemRequest enterItemRequest);
     BigDecimal endOrder();
     Boolean makeCashPayment(BigDecimal amount);
 }

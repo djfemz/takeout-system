@@ -35,7 +35,7 @@ public class Sale {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToMany
     private Set<OrderLineItem> orderLineItems;
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @OneToOne
     private Store store;
     private boolean isCurrentSale=false;

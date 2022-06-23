@@ -59,4 +59,9 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
         return true;
     }
 
+    @Override
+    public Item saveItem(Item item) {
+        return itemRepository.save(item);
+    }
+
 }

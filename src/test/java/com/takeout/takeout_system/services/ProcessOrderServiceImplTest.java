@@ -2,8 +2,10 @@ package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
 import com.takeout.takeout_system.data.dto.CreateStoreRequest;
+import com.takeout.takeout_system.data.dto.EnterItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.Store;
+import com.takeout.takeout_system.exceptions.StoreException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,23 +41,35 @@ class ProcessOrderServiceImplTest {
     }
     @Test
     void makeNewOrderTest() {
-//        boolean createStoreResponse = manageStoreCrudService.createStore(storeRequest);
-//        assertThat(createStoreResponse).isTrue();
-//        Store store = manageStoreCrudService.findStore(1L);
-//        itemRequest.setStore(store);
-//        boolean itemCreationResponse = manageItemCrudService.createItem(itemRequest);
-//        Item foundItem =manageItemCrudService.findItem(1L);
-//        store.getItems().add(foundItem);
-//        manageStoreCrudService.save(store);
-//        assertThat(itemCreationResponse).isTrue();
+        boolean createStoreResponse = manageStoreCrudService.createStore(storeRequest);
+        assertThat(createStoreResponse).isTrue();
+        Store store = manageStoreCrudService.findStore(1L);
+        store.setCurrentStore(true);
+        manageStoreCrudService.save(store);
         boolean makeOrderResponse = processOrderService.makeNewOrder();
         assertThat(makeOrderResponse).isTrue();
+    }
 
-
+    @Test
+    void exceptionIsThrownWhenAnOrderIsMadeWithoutCurrentStore(){
+        assertThrows(StoreException.class, ()->processOrderService.makeNewOrder());
     }
 
     @Test
     void enterItem() {
+        boolean createStoreResponse = manageStoreCrudService.createStore(storeRequest);
+        assertThat(createStoreResponse).isTrue();
+        Store store = manageStoreCrudService.findStore(1L);
+        boolean createItemResponse = manageItemCrudService.createItem(itemRequest);
+        assertThat(createItemResponse).isTrue();
+        Item item = manageItemCrudService.findItem(2L);
+        item.setStore(store);
+        manageItemCrudService.saveItem(item);
+        EnterItemRequest enterItemRequest = new EnterItemRequest();
+        enterItemRequest.setId(1L);
+        enterItemRequest.setQuantity(2);
+        boolean enterItemResponse = processOrderService.enterItem(enterItemRequest);
+        assertThat(enterItemResponse).isTrue();
     }
 
     @Test
