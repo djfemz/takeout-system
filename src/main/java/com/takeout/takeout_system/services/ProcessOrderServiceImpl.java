@@ -2,6 +2,8 @@ package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.EnterItemRequest;
 import com.takeout.takeout_system.data.models.*;
+import com.takeout.takeout_system.data.repositories.CardPaymentRepository;
+import com.takeout.takeout_system.data.repositories.CashPaymentRepository;
 import com.takeout.takeout_system.data.repositories.OrderLineItemRepository;
 import com.takeout.takeout_system.data.repositories.PaymentRepository;
 import com.takeout.takeout_system.exceptions.BusinessLogicException;
@@ -27,7 +29,7 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     @Autowired
     private OrderLineItemRepository orderLineItemRepository;
     @Autowired
-    private PaymentRepository paymentRepository;
+    private CashPaymentRepository cashPaymentRepository;
 
     @Override
     public Boolean makeNewOrder() {
@@ -86,6 +88,8 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
         Sale currentSale = saleService.getCurrentSale();
         if (currentSale!=null && !currentSale.isComplete()&&!currentSale.isReadyToPay()){
             currentSale.setReadyToPay(true);
+            currentSale.setAmount(calculateSaleAmount(currentSale));
+            saleService.addSale(currentSale);
             return calculateSaleAmount(currentSale);
         }
         throw new SaleNotFoundException("there is no current sale");
@@ -94,10 +98,15 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     @Override
     public Boolean makeCashPayment(BigDecimal amount) {
         Sale currentSale = saleService.getCurrentSale();
+        log.info("sallee->{}", currentSale);
         Store currentStore = manageStoreCrudService.getCurrentStore();
-
+        log.info("current sale->{}", currentSale.isReadyToPay());
         if (currentSale!=null&&!currentSale.isComplete()&& currentSale.isReadyToPay()){
-            if (amount.compareTo(currentSale.getAmount())>0){
+            log.info("here");
+            log.info("current sale->{}", currentSale.getAmount());
+
+            if (amount.compareTo(currentSale.getAmount())>=0){
+                log.info("here");
                 CashPayment cashPayment = new CashPayment();
                 cashPayment.setAmountTendered(amount);
                 cashPayment.setSale(currentSale);
@@ -105,7 +114,7 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
                 currentSale.setStore(currentStore);
                 currentStore.getSales().add(currentSale);
                 cashPayment.setBalance(amount.subtract(currentSale.getAmount()));
-                paymentRepository.save(cashPayment);
+                cashPaymentRepository.save(cashPayment);
                 currentSale.setAccept(false);
                 currentSale.setName(currentStore.getName());
                 saleService.addSale(currentSale);

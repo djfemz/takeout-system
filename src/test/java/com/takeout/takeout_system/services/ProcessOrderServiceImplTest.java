@@ -116,6 +116,25 @@ class ProcessOrderServiceImplTest {
 
     @Test
     void  makeCashPayment() {
+        saleService.addSale(sale);
+        log.info("sale-->{}", sale.getId());
+        boolean createStoreResponse = manageStoreCrudService.createStore(storeRequest);
+        assertThat(createStoreResponse).isTrue();
+        Store store = manageStoreCrudService.findStore(manageStoreCrudService.getAllStores().get(manageStoreCrudService.getAllStores().size()-1).getId());
+
+        store.setCurrentStore(true);
+        manageStoreCrudService.save(store);
+        boolean createItemResponse = manageItemCrudService.createItem(itemRequest);
+        assertThat(createItemResponse).isTrue();
+        log.info("all items->{}", manageItemCrudService.getAllItems().size());
+        Item item = manageItemCrudService.findItem(manageItemCrudService.getAllItems().get(manageItemCrudService.getAllItems().size()-1).getId());
+        item.setStore(store);
+        manageItemCrudService.saveItem(item);
+        EnterItemRequest enterItemRequest = new EnterItemRequest();
+        enterItemRequest.setId(manageItemCrudService.getAllItems().get(manageItemCrudService.getAllItems().size()-1).getId());
+        enterItemRequest.setQuantity(1);
+        processOrderService.enterItem(enterItemRequest);
+        processOrderService.endOrder();
         boolean makeCashPaymentResponse = processOrderService.makeCashPayment(BigDecimal.TEN);
         assertThat(makeCashPaymentResponse).isTrue();
     }

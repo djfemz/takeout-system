@@ -21,6 +21,7 @@ public class Payment {
     private Long id;
     private BigDecimal amountTendered;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    private BigDecimal balance;
     @OneToOne
     private Sale sale;
 }

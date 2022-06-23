@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class Business extends User{
+public class Business {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
