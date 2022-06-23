@@ -66,7 +66,7 @@ class ProcessOrderServiceImplTest {
         item.setStore(store);
         manageItemCrudService.saveItem(item);
         EnterItemRequest enterItemRequest = new EnterItemRequest();
-        enterItemRequest.setId(1L);
+        enterItemRequest.setId(2L);
         enterItemRequest.setQuantity(2);
         boolean enterItemResponse = processOrderService.enterItem(enterItemRequest);
         assertThat(enterItemResponse).isTrue();

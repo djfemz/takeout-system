@@ -23,4 +23,5 @@ public class OrderLineItem {
     private Item item;
     @OneToOne
     private Sale sale;
+    private boolean isCurrentOrderLineItem;
 }
