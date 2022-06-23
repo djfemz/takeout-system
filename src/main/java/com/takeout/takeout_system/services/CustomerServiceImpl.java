@@ -12,9 +12,17 @@ import java.math.BigDecimal;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
+    @Autowired
+    private TakeOutSystemService takeOutSystemService;
+
+    @Autowired
+    private ProcessOrderService processOrderService;
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private SaleService saleService;
 
     @Override
     public Customer getCustomerById(Long id) {
@@ -23,36 +31,36 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Boolean makeNewOrder() {
-        return null;
+        return processOrderService.makeNewOrder();
     }
 
     @Override
     public boolean enterItem(EnterItemRequest enterItemRequest) {
-        return false;
+        return processOrderService.enterItem(enterItemRequest);
     }
 
     @Override
     public BigDecimal endOrder() {
-        return null;
+        return processOrderService.endOrder();
     }
 
     @Override
     public Boolean makeCashPayment(BigDecimal amount) {
-        return null;
+        return processOrderService.makeCashPayment(amount);
     }
 
     @Override
     public Item search(String name) {
-        return null;
+        return takeOutSystemService.search(name);
     }
 
     @Override
     public Boolean enterStore(Long id) {
-        return null;
+        return takeOutSystemService.enterStore(id);
     }
 
     @Override
     public Sale getSale(Long id) {
-        return null;
+        return saleService.getSaleBy(id);
     }
 }

@@ -16,6 +16,8 @@ import java.util.Set;
 public class ManageDeliveryServiceImpl implements ManageDeliveryService{
     @Autowired
     private DeliveryRepository deliveryRepository;
+    @Autowired
+    private TakeOutSystemService takeOutSystemService;
 
     @Override
     public Boolean createDelivery(CreateDeliveryRequest createDeliveryRequest) {
@@ -43,16 +45,16 @@ public class ManageDeliveryServiceImpl implements ManageDeliveryService{
 
     @Override
     public Boolean acceptOrder(String name) throws SaleNotFoundException {
-        return null;
+        return takeOutSystemService.acceptOrder(name);
     }
 
     @Override
     public Boolean terminateOrder(String name) throws SaleNotFoundException {
-        return null;
+        return takeOutSystemService.terminateOrder(name);
     }
 
     @Override
     public Set<Sale> excursionPublicOrder(Long id) {
-        return null;
+        return takeOutSystemService.excursionPublicOrder(id);
     }
 }

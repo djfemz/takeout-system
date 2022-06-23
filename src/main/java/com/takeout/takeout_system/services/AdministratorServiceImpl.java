@@ -13,8 +13,6 @@ import java.util.List;
 @Service
 public class AdministratorServiceImpl implements AdministratorService{
     @Autowired
-    private TakeOutSystemService takeOutSystemService;
-    @Autowired
     private CustomerService customerService;
     @Autowired
     private ManageStoreCrudService manageStoreCrudService;

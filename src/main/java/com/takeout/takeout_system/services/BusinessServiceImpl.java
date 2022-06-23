@@ -18,6 +18,7 @@ public class BusinessServiceImpl implements BusinessService{
     private ManageItemCrudService manageItemCrudService;
     @Autowired
     private TakeOutSystemService takeOutSystemService;
+
     @Override
     public Boolean enterStore(Long id) {
         return takeOutSystemService.enterStore(id);
