@@ -20,4 +20,7 @@ public class Business {
     private String name;
     @OneToMany
     private Set<Store> stores;
+    @Enumerated
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 }

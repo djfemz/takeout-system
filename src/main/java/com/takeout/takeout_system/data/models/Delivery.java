@@ -27,4 +27,5 @@ public class Delivery {
 
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Sale> sale;
+    private Role role;
 }

@@ -19,8 +19,7 @@ public class Administrator {
     private Long id;
     private String email;
     private String password;
-    @OneToMany
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Set<Role> role;
 }

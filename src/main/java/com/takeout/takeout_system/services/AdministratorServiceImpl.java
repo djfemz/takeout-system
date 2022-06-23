@@ -5,47 +5,59 @@ import com.takeout.takeout_system.data.dto.CreateStoreRequest;
 import com.takeout.takeout_system.data.dto.ModifyStoreRequest;
 import com.takeout.takeout_system.data.models.Customer;
 import com.takeout.takeout_system.data.models.Store;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AdministratorServiceImpl implements AdministratorService{
+    @Autowired
+    private TakeOutSystemService takeOutSystemService;
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private ManageStoreCrudService manageStoreCrudService;
+    @Autowired
+    private ManageDeliveryService manageDeliveryService;
     @Override
     public Customer getCustomerById(Long id) {
-        return null;
+        return customerService.getCustomerById(id);
     }
 
     @Override
     public boolean createStore(CreateStoreRequest createStoreRequest) {
-        return false;
+        return manageStoreCrudService.createStore(createStoreRequest);
+
     }
 
     @Override
     public Store findStore(Long id) {
-        return null;
+        return manageStoreCrudService.findStore(id);
     }
 
     @Override
     public boolean modifyStore(ModifyStoreRequest modifyStoreRequest) {
-        return false;
+        return manageStoreCrudService.modifyStore(modifyStoreRequest);
     }
 
     @Override
     public boolean deleteStore(Long id) {
-        return false;
+        return manageStoreCrudService.deleteStore(id);
     }
 
     @Override
     public Store getCurrentStore() {
-        return null;
+        return manageStoreCrudService.getCurrentStore();
     }
 
     @Override
     public List<Store> getAllStores() {
-        return null;
+        return manageStoreCrudService.getAllStores();
     }
 
     @Override
     public Boolean createDelivery(CreateDeliveryRequest createDeliveryRequest) {
-        return null;
+        return manageDeliveryService.createDelivery(createDeliveryRequest);
     }
 }
