@@ -5,7 +5,7 @@ import com.takeout.takeout_system.data.models.Sale;
 
 public interface SaleService {
     Boolean addSale(Sale sale);
-    FindSaleResponse getSaleBy(Long id);
-    FindSaleResponse getSaleBy(String name);
+    Sale getSaleBy(Long id);
+    Sale getSaleBy(String name);
     Sale getCurrentSale();
 }

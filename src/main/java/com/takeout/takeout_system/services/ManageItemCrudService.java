@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ManageItemCrudService {
     Boolean createItem(CreateItemRequest createItemRequest);
-    FindItemResponse findItem(Long id);
+    Item findItem(Long id);
     Item findBy(String name);
     Boolean modifyItem(Long id, ModifyItemRequest modifyItemRequest) ;
     Boolean deleteItem(Long id);

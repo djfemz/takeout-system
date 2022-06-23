@@ -3,6 +3,7 @@ package com.takeout.takeout_system.services;
 import com.takeout.takeout_system.data.dto.*;
 import com.takeout.takeout_system.data.models.Customer;
 import com.takeout.takeout_system.data.models.Store;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class AdministratorServiceImpl implements AdministratorService{
     private ManageStoreCrudService manageStoreCrudService;
     @Autowired
     private ManageDeliveryService manageDeliveryService;
+
+    private final ModelMapper mapper = new ModelMapper();
     @Override
     public FindCustomerResponse getCustomerById(Long id) {
         return customerService.getCustomerById(id);
@@ -29,7 +32,8 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     @Override
     public FindStoreResponse findStore(Long id) {
-        return manageStoreCrudService.findStore(id);
+        Store store = manageStoreCrudService.findStore(id);
+        return mapper.map(store, FindStoreResponse.class);
     }
 
     @Override
@@ -44,7 +48,8 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     @Override
     public FindStoreResponse getCurrentStore() {
-        return manageStoreCrudService.getCurrentStore();
+        Store store = manageStoreCrudService.getCurrentStore();
+        return mapper.map(store, FindStoreResponse.class);
     }
 
     @Override

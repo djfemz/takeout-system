@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public interface ManageStoreCrudService {
     boolean createStore(CreateStoreRequest createStoreRequest);
-    FindStoreResponse findStore(Long id);
+    Store findStore(Long id);
     boolean modifyStore(ModifyStoreRequest modifyStoreRequest);
     boolean deleteStore(Long id);
     Store save(Store store);
-    FindStoreResponse getCurrentStore();
+    Store getCurrentStore();
     List<FindStoreResponse> getAllStores();
 }

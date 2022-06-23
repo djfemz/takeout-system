@@ -39,9 +39,8 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
     }
 
     @Override
-    public FindItemResponse findItem(Long id) {
-        Item item = itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException(String.format("item with id %d not found", id)));
-        return modelMapper.map(item, FindItemResponse.class);
+    public Item findItem(Long id) {
+        return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException(String.format("item with id %d not found", id)));
     }
 
     @Override

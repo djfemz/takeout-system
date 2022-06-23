@@ -31,12 +31,13 @@ public class BusinessServiceImpl implements BusinessService{
 
     @Override
     public FindSaleResponse getSaleBy(Long id) {
-        return saleService.getSaleBy(id);
+        Sale sale =saleService.getSaleBy(id);
+        return modelMapper.map(sale, FindSaleResponse.class);
     }
 
     @Override
     public FindSaleResponse getSaleBy(String name) {
-        return saleService.getSaleBy(name);
+        return modelMapper.map(saleService.getSaleBy(name), FindSaleResponse.class);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class BusinessServiceImpl implements BusinessService{
 
     @Override
     public FindItemResponse findItem(Long id) {
-        return manageItemCrudService.findItem(id);
+        return modelMapper.map(manageItemCrudService.findItem(id), FindItemResponse.class);
     }
 
     @Override

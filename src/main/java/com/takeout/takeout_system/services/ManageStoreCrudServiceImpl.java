@@ -38,9 +38,9 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
     }
 
     @Override
-    public FindStoreResponse findStore(Long id) {
-        Store store = storeRepository.findById(id).orElseThrow(()->new StoreException(String.format("store with id %d not found", id)));
-        return mapper.map(store, FindStoreResponse.class);
+    public Store findStore(Long id) {
+        return storeRepository.findById(id).orElseThrow(()->new StoreException(String.format("store with id %d not found", id)));
+
     }
 
     @Override
@@ -66,9 +66,8 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
     }
 
     @Override
-    public FindStoreResponse getCurrentStore() {
-        Store store = storeRepository.findByIsCurrentStoreIsTrue();
-        return mapper.map(store, FindStoreResponse.class);
+    public Store getCurrentStore() {
+        return storeRepository.findByIsCurrentStoreIsTrue();
     }
 
     @Override

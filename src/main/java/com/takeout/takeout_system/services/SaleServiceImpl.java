@@ -21,10 +21,10 @@ public class SaleServiceImpl implements SaleService{
     }
 
     @Override
-    public FindSaleResponse getSaleBy(Long id) {
-        Sale sale = saleRepository.findById(id)
+    public Sale getSaleBy(Long id) {
+        return saleRepository.findById(id)
                 .orElseThrow(()->new SaleNotFoundException(String.format("sale with id %d not found", id)));
-       return mapper.map(sale, FindSaleResponse.class);
+
     }
 
     @Override
@@ -33,8 +33,7 @@ public class SaleServiceImpl implements SaleService{
     }
 
     @Override
-    public FindSaleResponse getSaleBy(String name) {
-        Sale sale = saleRepository.findByName(name);
-        return mapper.map(sale, FindSaleResponse.class);
+    public Sale getSaleBy(String name) {
+        return saleRepository.findByName(name);
     }
 }
