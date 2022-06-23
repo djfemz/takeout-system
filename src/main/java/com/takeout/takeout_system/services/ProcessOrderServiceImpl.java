@@ -1,11 +1,9 @@
 package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.EnterItemRequest;
-import com.takeout.takeout_system.data.models.Item;
-import com.takeout.takeout_system.data.models.OrderLineItem;
-import com.takeout.takeout_system.data.models.Sale;
-import com.takeout.takeout_system.data.models.Store;
+import com.takeout.takeout_system.data.models.*;
 import com.takeout.takeout_system.data.repositories.OrderLineItemRepository;
+import com.takeout.takeout_system.data.repositories.PaymentRepository;
 import com.takeout.takeout_system.exceptions.BusinessLogicException;
 import com.takeout.takeout_system.exceptions.ItemNotFoundException;
 import com.takeout.takeout_system.exceptions.SaleNotFoundException;
@@ -15,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Slf4j
@@ -28,6 +26,8 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     private ManageItemCrudService manageItemCrudService;
     @Autowired
     private OrderLineItemRepository orderLineItemRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Override
     public Boolean makeNewOrder() {
@@ -69,6 +69,7 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
             currentSale.getOrderLineItems().add(orderLineItem);
             orderLineItem.setQuantity(enterItemRequest.getQuantity());
             orderLineItem.setItem(item);
+            orderLineItem.setSubAmount(calculateSubAmountOfCurrentOrderLineItem(orderLineItem));
             if (!isValidOrderQuantity(item.getStockNumber(), enterItemRequest.getQuantity()))
                 throw new BusinessLogicException("order quantity greater than number in stock");
             item.setStockNumber(item.getStockNumber()-enterItemRequest.getQuantity());
@@ -82,16 +83,53 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
 
     @Override
     public BigDecimal endOrder() {
-        return null;
+        Sale currentSale = saleService.getCurrentSale();
+        if (currentSale!=null && !currentSale.isComplete()&&!currentSale.isReadyToPay()){
+            currentSale.setReadyToPay(true);
+            return calculateSaleAmount(currentSale);
+        }
+        throw new SaleNotFoundException("there is no current sale");
     }
 
     @Override
     public Boolean makeCashPayment(BigDecimal amount) {
-        return null;
+        Sale currentSale = saleService.getCurrentSale();
+        Store currentStore = manageStoreCrudService.getCurrentStore();
+
+        if (currentSale!=null&&!currentSale.isComplete()&& currentSale.isReadyToPay()){
+            if (amount.compareTo(currentSale.getAmount())>0){
+                CashPayment cashPayment = new CashPayment();
+                cashPayment.setAmountTendered(amount);
+                cashPayment.setSale(currentSale);
+                currentSale.setPayment(cashPayment);
+                currentSale.setStore(currentStore);
+                currentStore.getSales().add(currentSale);
+                cashPayment.setBalance(amount.subtract(currentSale.getAmount()));
+                paymentRepository.save(cashPayment);
+                currentSale.setAccept(false);
+                currentSale.setName(currentStore.getName());
+                saleService.addSale(currentSale);
+                return true;
+            }
+        }
+        return false;
     }
 
     private BigDecimal getSubAmount(Item item, Integer quantity){
         return item.getPrice().multiply(BigDecimal.valueOf(quantity));
+    }
+
+    private BigDecimal calculateSaleAmount(Sale sale){
+        AtomicReference<BigDecimal> sum = new AtomicReference<>(BigDecimal.ZERO);
+        sale.getOrderLineItems().forEach(orderLineItem->{
+            sum.set(BigDecimal.valueOf(sum.get().doubleValue() + orderLineItem.getSubAmount().doubleValue()));
+        });
+        return sum.get();
+
+    }
+
+    private BigDecimal calculateSubAmountOfCurrentOrderLineItem(OrderLineItem orderLineItem){
+        return orderLineItem.getItem().getPrice();
     }
 
     private boolean isValidOrderQuantity(int stockNumber, int quantity){

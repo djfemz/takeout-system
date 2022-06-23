@@ -5,6 +5,8 @@ import com.takeout.takeout_system.data.dto.ModifyStoreRequest;
 import com.takeout.takeout_system.data.models.Store;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface ManageStoreCrudService {
     boolean createStore(CreateStoreRequest createStoreRequest);
@@ -13,4 +15,5 @@ public interface ManageStoreCrudService {
     boolean deleteStore(Long id);
     Store save(Store store);
     Store getCurrentStore();
+    List<Store> getAllStores();
 }

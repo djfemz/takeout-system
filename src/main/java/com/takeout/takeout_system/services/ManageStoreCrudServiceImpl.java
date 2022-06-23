@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -65,5 +66,10 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
     @Override
     public Store getCurrentStore() {
         return storeRepository.findByIsCurrentStoreIsTrue();
+    }
+
+    @Override
+    public List<Store> getAllStores() {
+        return storeRepository.findAll();
     }
 }
