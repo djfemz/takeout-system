@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Delivery {
+public class Delivery extends User{
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(insertable = false, nullable = false)

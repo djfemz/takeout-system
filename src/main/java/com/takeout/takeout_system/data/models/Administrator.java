@@ -13,12 +13,10 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Administrator {
+public class Administrator extends User{
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    private String email;
-    private String password;
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
