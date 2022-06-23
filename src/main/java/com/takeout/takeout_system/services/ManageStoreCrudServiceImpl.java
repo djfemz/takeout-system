@@ -1,6 +1,7 @@
 package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.CreateStoreRequest;
+import com.takeout.takeout_system.data.dto.FindStoreResponse;
 import com.takeout.takeout_system.data.dto.ModifyStoreRequest;
 import com.takeout.takeout_system.data.models.Store;
 import com.takeout.takeout_system.data.repositories.StoreRepository;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -36,8 +38,9 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
     }
 
     @Override
-    public Store findStore(Long id) {
-        return storeRepository.findById(id).orElseThrow(()->new StoreException(String.format("store with id %d not found", id)));
+    public FindStoreResponse findStore(Long id) {
+        Store store = storeRepository.findById(id).orElseThrow(()->new StoreException(String.format("store with id %d not found", id)));
+        return mapper.map(store, FindStoreResponse.class);
     }
 
     @Override
@@ -46,7 +49,6 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
                 .orElseThrow(()->new StoreException(String.format("store with id %d not found", modifyStoreRequest.getId())));
         mapper.map(modifyStoreRequest, foundStore);
         Store savedStore =storeRepository.save(foundStore);
-        log.info("updated store->{} {} {}", savedStore.getName(), savedStore.getAddress(), savedStore.getId());
         return true;
     }
 
@@ -64,12 +66,18 @@ public class ManageStoreCrudServiceImpl implements ManageStoreCrudService {
     }
 
     @Override
-    public Store getCurrentStore() {
-        return storeRepository.findByIsCurrentStoreIsTrue();
+    public FindStoreResponse getCurrentStore() {
+        Store store = storeRepository.findByIsCurrentStoreIsTrue();
+        return mapper.map(store, FindStoreResponse.class);
     }
 
     @Override
-    public List<Store> getAllStores() {
-        return storeRepository.findAll();
+    public List<FindStoreResponse> getAllStores() {
+        List<Store> allStores =  storeRepository.findAll();
+        List<FindStoreResponse> allStoresResponse = new ArrayList<>();
+        allStores.forEach(store -> {
+            allStoresResponse.add(mapper.map(store, FindStoreResponse.class));
+        });
+        return allStoresResponse;
     }
 }

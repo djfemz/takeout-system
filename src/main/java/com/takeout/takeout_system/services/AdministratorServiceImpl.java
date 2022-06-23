@@ -1,8 +1,6 @@
 package com.takeout.takeout_system.services;
 
-import com.takeout.takeout_system.data.dto.CreateDeliveryRequest;
-import com.takeout.takeout_system.data.dto.CreateStoreRequest;
-import com.takeout.takeout_system.data.dto.ModifyStoreRequest;
+import com.takeout.takeout_system.data.dto.*;
 import com.takeout.takeout_system.data.models.Customer;
 import com.takeout.takeout_system.data.models.Store;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,7 @@ public class AdministratorServiceImpl implements AdministratorService{
     @Autowired
     private ManageDeliveryService manageDeliveryService;
     @Override
-    public Customer getCustomerById(Long id) {
+    public FindCustomerResponse getCustomerById(Long id) {
         return customerService.getCustomerById(id);
     }
 
@@ -30,7 +28,7 @@ public class AdministratorServiceImpl implements AdministratorService{
     }
 
     @Override
-    public Store findStore(Long id) {
+    public FindStoreResponse findStore(Long id) {
         return manageStoreCrudService.findStore(id);
     }
 
@@ -45,12 +43,12 @@ public class AdministratorServiceImpl implements AdministratorService{
     }
 
     @Override
-    public Store getCurrentStore() {
+    public FindStoreResponse getCurrentStore() {
         return manageStoreCrudService.getCurrentStore();
     }
 
     @Override
-    public List<Store> getAllStores() {
+    public List<FindStoreResponse> getAllStores() {
         return manageStoreCrudService.getAllStores();
     }
 

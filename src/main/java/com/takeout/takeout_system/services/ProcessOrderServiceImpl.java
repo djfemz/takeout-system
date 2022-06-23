@@ -27,8 +27,6 @@ public class ProcessOrderServiceImpl implements ProcessOrderService {
     @Autowired
     private ManageItemCrudService manageItemCrudService;
     @Autowired
-    private OrderLineItemRepository orderLineItemRepository;
-    @Autowired
     private CashPaymentRepository cashPaymentRepository;
 
     @Override
