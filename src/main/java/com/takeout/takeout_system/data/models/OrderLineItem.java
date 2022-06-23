@@ -19,9 +19,9 @@ public class OrderLineItem {
     private Long id;
     private int quantity;
     private BigDecimal subAmount;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Item item;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Sale sale;
     private boolean isCurrentOrderLineItem;
 }

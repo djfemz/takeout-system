@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Slf4j
@@ -26,6 +28,7 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
     public Boolean createItem(CreateItemRequest createItemRequest) {
         Item item = new Item();
         item.setName(createItemRequest.getName());
+        item.setPrice(createItemRequest.getPrice());
         item.setOrderPrice(createItemRequest.getOrderPrice());
         item.setStockNumber(createItemRequest.getStockNumber());
         item.setProductCatalogue(new ProductCatalogue());
@@ -62,6 +65,11 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
     @Override
     public Item saveItem(Item item) {
         return itemRepository.save(item);
+    }
+
+    @Override
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
     }
 
 }

@@ -33,7 +33,7 @@ public class Sale {
     @OneToOne
     private Payment payment;
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<OrderLineItem> orderLineItems;
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     @OneToOne

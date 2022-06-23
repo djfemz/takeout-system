@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class EnterItemRequest {
     private Long id;
-    private Integer quantity;
+    private int quantity;
 }

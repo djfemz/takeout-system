@@ -5,6 +5,7 @@ import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ManageItemCrudService {
     Boolean createItem(CreateItemRequest createItemRequest);
@@ -13,4 +14,5 @@ public interface ManageItemCrudService {
     Boolean modifyItem(Long id, ModifyItemRequest modifyItemRequest) ;
     Boolean deleteItem(Long id);
     Item saveItem(Item item);
+    List<Item> getAllItems();
 }
