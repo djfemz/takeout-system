@@ -1,12 +1,16 @@
 package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
+import com.takeout.takeout_system.data.dto.FindItemResponse;
+import com.takeout.takeout_system.data.dto.FindSaleResponse;
 import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.Sale;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +22,7 @@ public class BusinessServiceImpl implements BusinessService{
     private ManageItemCrudService manageItemCrudService;
     @Autowired
     private TakeOutSystemService takeOutSystemService;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Override
     public Boolean enterStore(Long id) {
@@ -25,12 +30,12 @@ public class BusinessServiceImpl implements BusinessService{
     }
 
     @Override
-    public Sale getSaleBy(Long id) {
+    public FindSaleResponse getSaleBy(Long id) {
         return saleService.getSaleBy(id);
     }
 
     @Override
-    public Sale getSaleBy(String name) {
+    public FindSaleResponse getSaleBy(String name) {
         return saleService.getSaleBy(name);
     }
 
@@ -40,13 +45,14 @@ public class BusinessServiceImpl implements BusinessService{
     }
 
     @Override
-    public Item findItem(Long id) {
+    public FindItemResponse findItem(Long id) {
         return manageItemCrudService.findItem(id);
     }
 
     @Override
-    public Item findBy(String name) {
-        return manageItemCrudService.findBy(name);
+    public FindItemResponse findBy(String name) {
+        Item item = manageItemCrudService.findBy(name);
+        return modelMapper.map(item, FindItemResponse.class);
     }
 
     @Override
@@ -59,14 +65,15 @@ public class BusinessServiceImpl implements BusinessService{
         return manageItemCrudService.deleteItem(id);
     }
 
-    @Override
-    public Item saveItem(Item item) {
-        return manageItemCrudService.saveItem(item);
-    }
 
     @Override
-    public List<Item> getAllItems() {
-        return manageItemCrudService.getAllItems();
+    public List<FindItemResponse> getAllItems() {
+        List<FindItemResponse> allItemResponse = new ArrayList<>();
+        List<Item> allItems = manageItemCrudService.getAllItems();
+        allItems.forEach(item -> {
+            allItemResponse.add(modelMapper.map(item, FindItemResponse.class));
+        });
+        return allItemResponse;
     }
 
     @Override

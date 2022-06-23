@@ -2,6 +2,7 @@ package com.takeout.takeout_system.services;
 
 
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
+import com.takeout.takeout_system.data.dto.FindItemResponse;
 import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.ProductCatalogue;
@@ -38,8 +39,9 @@ public class ManageItemCrudServiceImpl implements ManageItemCrudService{
     }
 
     @Override
-    public Item findItem(Long id) {
-        return itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException(String.format("item with id %d not found", id)));
+    public FindItemResponse findItem(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow(()->new ItemNotFoundException(String.format("item with id %d not found", id)));
+        return modelMapper.map(item, FindItemResponse.class);
     }
 
     @Override
