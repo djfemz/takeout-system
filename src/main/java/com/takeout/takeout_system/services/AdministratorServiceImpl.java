@@ -11,17 +11,31 @@ import java.util.List;
 
 @Service
 public class AdministratorServiceImpl implements AdministratorService{
-    @Autowired
+
     private CustomerService customerService;
-    @Autowired
     private ManageStoreCrudService manageStoreCrudService;
-    @Autowired
     private ManageDeliveryService manageDeliveryService;
 
     private final ModelMapper mapper = new ModelMapper();
+
     @Override
     public FindCustomerResponse getCustomerById(Long id) {
         return customerService.getCustomerById(id);
+    }
+
+    @Autowired
+    public void setManageStoreCrudService(ManageStoreCrudService manageStoreCrudService) {
+        this.manageStoreCrudService = manageStoreCrudService;
+    }
+
+    @Autowired
+    public void setManageDeliveryService(ManageDeliveryService manageDeliveryService) {
+        this.manageDeliveryService = manageDeliveryService;
+    }
+
+    @Autowired
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     @Override

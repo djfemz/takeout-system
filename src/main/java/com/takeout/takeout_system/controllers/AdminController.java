@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
-    @Autowired
+
     private AdministratorService administratorService;
+
+    @Autowired
+    public void setAdministratorService(AdministratorService administratorService) {
+        this.administratorService = administratorService;
+    }
 
     @GetMapping("/customer/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable Long id){

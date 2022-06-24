@@ -8,16 +8,24 @@ import com.takeout.takeout_system.exceptions.SaleNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
 public class ManageDeliveryServiceImpl implements ManageDeliveryService{
-    @Autowired
     private DeliveryRepository deliveryRepository;
-    @Autowired
     private TakeOutSystemService takeOutSystemService;
+
+
+    @Autowired
+    public void setDeliveryRepository(DeliveryRepository deliveryRepository) {
+        this.deliveryRepository = deliveryRepository;
+    }
+
+    @Autowired
+    public void setTakeOutSystemService(TakeOutSystemService takeOutSystemService) {
+        this.takeOutSystemService = takeOutSystemService;
+    }
 
     @Override
     public Boolean createDelivery(CreateDeliveryRequest createDeliveryRequest) {

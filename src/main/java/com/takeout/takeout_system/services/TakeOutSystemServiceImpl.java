@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -23,16 +24,36 @@ import java.util.Set;
 @NoArgsConstructor
 public class TakeOutSystemServiceImpl implements TakeOutSystemService {
 
-    @Autowired
+
     private SaleService saleService;
-    @Autowired
+
     private ManageDeliveryService manageDeliveryService;
-    @Autowired
+
     private ManageStoreCrudService manageStoreCrudService;
 
-    @Autowired
+
     private ManageItemCrudService manageItemCrudService;
 
+    @Autowired
+    public void setSaleService(SaleService saleService) {
+        this.saleService = saleService;
+    }
+
+    @Autowired
+    public void setManageStoreCrudService(ManageStoreCrudService manageStoreCrudService) {
+        this.manageStoreCrudService = manageStoreCrudService;
+    }
+
+    @Autowired
+    public void setManageItemCrudService(ManageItemCrudService manageItemCrudService) {
+        this.manageItemCrudService = manageItemCrudService;
+    }
+
+    @Lazy
+    @Autowired
+    public void setManageDeliveryService(ManageDeliveryService manageDeliveryService) {
+        this.manageDeliveryService = manageDeliveryService;
+    }
 
     @Override
     public Boolean acceptOrder(String name) throws SaleNotFoundException {
