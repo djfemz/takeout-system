@@ -19,10 +19,6 @@ public class AdminController {
         this.administratorService = administratorService;
     }
 
-    @GetMapping("/welcome")
-    public String welcome(){
-        return "welcome home";
-    }
 
     @GetMapping("/customer/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable Long id){
