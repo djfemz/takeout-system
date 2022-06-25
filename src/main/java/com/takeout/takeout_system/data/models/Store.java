@@ -23,10 +23,10 @@ public class Store {
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Sale> sales;
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE, org.hibernate.annotations.CascadeType.DETACH})
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Item> items;
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.DELETE})
     @OneToMany(fetch = FetchType.EAGER)
     private Set<ProductCatalogue> productCatalogues;
     private boolean isCurrentStore = false;

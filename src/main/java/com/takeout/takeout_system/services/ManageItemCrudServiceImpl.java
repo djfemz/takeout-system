@@ -2,11 +2,9 @@ package com.takeout.takeout_system.services;
 
 
 import com.takeout.takeout_system.data.dto.CreateItemRequest;
-import com.takeout.takeout_system.data.dto.FindItemResponse;
 import com.takeout.takeout_system.data.dto.ModifyItemRequest;
 import com.takeout.takeout_system.data.models.Item;
 import com.takeout.takeout_system.data.models.ProductCatalogue;
-import com.takeout.takeout_system.data.models.Store;
 import com.takeout.takeout_system.data.repositories.ItemRepository;
 import com.takeout.takeout_system.exceptions.ItemNotFoundException;
 import lombok.extern.slf4j.Slf4j;

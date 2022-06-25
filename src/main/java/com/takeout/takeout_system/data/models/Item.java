@@ -26,6 +26,7 @@ public class Item {
     private Integer stockNumber;
     private BigDecimal orderPrice;
     @OneToOne(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Store store;
     @OneToOne(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
