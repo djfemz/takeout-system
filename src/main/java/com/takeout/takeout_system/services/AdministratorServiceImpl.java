@@ -1,14 +1,16 @@
 package com.takeout.takeout_system.services;
 
 import com.takeout.takeout_system.data.dto.*;
-import com.takeout.takeout_system.data.models.Customer;
+
 import com.takeout.takeout_system.data.models.Store;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class AdministratorServiceImpl implements AdministratorService{
 
@@ -75,4 +77,5 @@ public class AdministratorServiceImpl implements AdministratorService{
     public Boolean createDelivery(CreateDeliveryRequest createDeliveryRequest) {
         return manageDeliveryService.createDelivery(createDeliveryRequest);
     }
+
 }
